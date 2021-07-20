@@ -2,7 +2,9 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useState } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { executaRequisicao } from '../services/api';
 import { loginStyles, defaultStyles } from '../styles/styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const LoginScreen = () => {
 
@@ -30,20 +32,21 @@ export const LoginScreen = () => {
                 senha: password
             };
 
-            //const resultado = await executaRequisicao('login', 'post', body);
-            // if(resultado?.data?.token){
-            //     localStorage.setItem('accessToken', resultado.data.token);
-            //     localStorage.setItem('usuarioNome', resultado.data.nome);
-            //     localStorage.setItem('usuarioEmail', resultado.data.email);
-            //     props.setAccessToken(resultado.data.token);
-            // }
-
-            navigation.navigate('Home');
+            const resultado = await executaRequisicao('login', 'post', body);
+            if(resultado?.data?.token){
+                AsyncStorage.setItem('accessToken', resultado.data.token);
+                AsyncStorage.setItem('usuarioNome', resultado.data.nome);
+                AsyncStorage.setItem('usuarioEmail', resultado.data.email);
+                navigation.navigate('Home');   
+                return; 
+            }
+            setErrorMsg('Não foi possível efetuar o login, fale com o administrador.')
         } catch (e) {
-            console.log(e);
-            if (e?.response?.data?.erro) {
-                setErrorMsg(e.response.data.erro);
+            if (e?.response?.data?.message) {
+                console.log(e?.response?.data);
+                setErrorMsg(e.response.data.message);
             } else {
+                console.log(e);
                 setErrorMsg('Não foi possível efetuar o login, fale com o administrador.')
             }
         }
@@ -64,6 +67,8 @@ export const LoginScreen = () => {
                     <TextInput
                         style={loginStyles.input}
                         placeholder="Digite seu email"
+                        keyboardType="email-address"
+                        autoCapitalize="none"
                         value={login}
                         onChangeText={setLogin} />
                 </View>
@@ -71,6 +76,7 @@ export const LoginScreen = () => {
                     <Image source={require('../assets/images/lock.png')} style={loginStyles.icone} />
                     <TextInput secureTextEntry={true} style={loginStyles.input} placeholder="Digite sua senha"
                         value={password}
+                        autoCapitalize="none"
                         onChangeText={setPassword} />
                 </View>
 

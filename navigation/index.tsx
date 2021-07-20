@@ -11,10 +11,10 @@ import { RootStackParamList } from '../types';
 import { LoginScreen } from '../screens/LoginScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 
-export default function Navigation() {
+export default function Navigation(props : any) {
   return (
     <NavigationContainer>
-      <RootNavigator />
+      <RootNavigator accessToken={props.accessToken}/>
     </NavigationContainer>
   );
 }
@@ -22,10 +22,9 @@ export default function Navigation() {
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
-
-function RootNavigator() {
+function RootNavigator(props : any) {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={props.accessToken !== '' && props.accessToken !== null  ? "Home" : "Login"}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
     </Stack.Navigator>

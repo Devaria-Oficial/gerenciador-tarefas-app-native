@@ -7,14 +7,14 @@ import useCachedResources from './hooks/useCachedResources';
 import Navigation from './navigation';
 
 export default function App() {
-  const isLoadingComplete = useCachedResources();
+  const { isLoadingComplete, accessToken } = useCachedResources();
 
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation />
+        <Navigation accessToken={accessToken}/>
         <StatusBar />
       </SafeAreaProvider>
     );
