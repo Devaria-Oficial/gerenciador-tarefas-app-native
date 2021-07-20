@@ -3,10 +3,6 @@ import colors from '../constants/Colors';
 import { RFValue } from "react-native-responsive-fontsize";
 
 export default StyleSheet.create({
-    form: {
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     logo: {
         marginBottom: RFValue(30),
         width: RFValue(196),

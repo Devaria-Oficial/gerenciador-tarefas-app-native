@@ -3,12 +3,16 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 import colors from '../constants/Colors';
 import loginStyles from './login';
+import headerStyles from './header';
 
 const defaultStyles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    containerTop: {
+        justifyContent: "flex-start"
     },
     horizontalView: {
         display: 'flex',
@@ -26,4 +30,4 @@ const defaultStyles = StyleSheet.create({
     }
 });
 
-export { loginStyles, defaultStyles }
+export { loginStyles, defaultStyles, headerStyles }
