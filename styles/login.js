@@ -17,6 +17,10 @@ export default StyleSheet.create({
         width: RFValue(20),
         resizeMode: 'contain'
     },
+    form: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     input: {
         marginBottom: RFValue(12),
         fontSize: RFValue(16),

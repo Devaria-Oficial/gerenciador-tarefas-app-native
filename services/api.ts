@@ -1,15 +1,15 @@
 import axios, { Method } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const URL  = 'http://192.168.15.6:3001/api/';
+const URL  = 'http://192.168.15.12:3001/api/';
 const instance = axios.create({
     baseURL : URL,
     timeout: 30000
 });
 
-export const executaRequisicao = (endpoint: string, metodo : Method, body: any) => {
+export const executaRequisicao = async(endpoint: string, metodo : Method, body?: any ) => {
 
-    const accessToken =  AsyncStorage.getItem('accessToken');
+    const accessToken =  await AsyncStorage.getItem('accessToken');
 
     let headers : any = {'Content-Type' : 'application/json'};
     if(accessToken){

@@ -27,7 +27,6 @@ export default StyleSheet.create({
     sair: {
         marginRight: RFValue(16),
         width: RFValue(30),
-        height: RFValue(30),
         height: RFValue(30)
     },
     textNome: {
