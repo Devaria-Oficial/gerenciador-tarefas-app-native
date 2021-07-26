@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Image, Text, FlatList } from 'react-native';
+import { View, Image, Text, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
 import { listaStyles } from '../styles/styles';
 import { ItemLista } from './ItemLista';
+import colors from '../constants/Colors';
 
 export const Lista = (props : any) => {
-    const {lista} = props;
+    const {lista, refreshing, getLista, loading} = props;
 
     const renderItem = (obj: any) => {
         const {item} = obj;
@@ -12,9 +13,12 @@ export const Lista = (props : any) => {
     }
 
     return (
-        <View style={[listaStyles.container, (lista === null || lista.length === 0 ? listaStyles.empty : null)]}>
+        <View style={[listaStyles.container, (loading === true || lista === null || lista.length === 0 ? listaStyles.empty : null)]}>
             
-            {lista === null || lista.length === 0 ? 
+            {loading === true ?
+                <ActivityIndicator color={colors.primaryColor} size="large" />
+            : 
+            lista === null || lista.length === 0 ? 
                 <>
                     <Image style={listaStyles.image} source={require('../assets/images/not-found.png')} />
                     <Text style={listaStyles.text}>Você ainda não possui tarefas cadastradas!</Text>
@@ -24,6 +28,10 @@ export const Lista = (props : any) => {
                     data={lista}
                     keyExtractor={item => item._id}
                     renderItem={renderItem}
+                    refreshControl={<RefreshControl
+                        colors={[colors.primaryColor, colors.mediumGreyColor]}
+                        refreshing={refreshing}
+                        onRefresh={getLista} />}
                 />
             }
         </View>

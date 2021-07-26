@@ -6,13 +6,12 @@ import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 
-export const Filtros = () => {
+export const Filtros = (props: any) => {
+
+    const {setStatus, setPeriodoDe, setPeriodoAte, status, periodoDe, periodoAte} = props;
 
     const [showFiltros, setShowFiltros] = useState(false);
-    const [status, setStatus] = useState(0);
-    const [periodoDe, setPeriodoDe] = useState<Date>(new Date());
     const [showPeriodoDe, setShowPeriodoDe] = useState(false);
-    const [periodoAte, setPeriodoAte] = useState<Date>(new Date());
     const [showPeriodoAte, setShowPeriodoAte] = useState(false);
 
     return (
@@ -66,7 +65,10 @@ export const Filtros = () => {
                             style={[defaultStyles.inputSelect, { borderColor: "#7C7786", borderWidth: 5 }]}
                             itemStyle={defaultStyles.inputSelect}
                             selectedValue={status}
-                            onValueChange={(itemValue) => setStatus(itemValue)}>
+                            onValueChange={(itemValue) => {
+                                console.log(itemValue);
+                                setStatus(itemValue)
+                            }}>
                             <Picker.Item label="Todas" value={0} />
                             <Picker.Item label="Ativas" value={1} />
                             <Picker.Item label="Concluídas" value={2} />

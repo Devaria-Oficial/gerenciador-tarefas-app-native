@@ -7,15 +7,18 @@ import { Lista } from '../componentes/Lista';
 import { Footer } from '../componentes/Footer';
 import { useState } from 'react';
 import { executaRequisicao } from '../services/api';
+import moment from 'moment';
 
 export const HomeScreen = () => {
 
     // STATES DA LISTA
     const [tarefas, setTarefas] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+    const [loading, setLoading] = useState(false);
     
     // STATES DOS FILTROS
-    const [periodoDe, setPeriodoDe] = useState('');
-    const [periodoAte, setPeriodoAte] = useState('');
+    const [periodoDe, setPeriodoDe] = useState(new Date());
+    const [periodoAte, setPeriodoAte] = useState(new Date());
     const [status, setStatus] = useState(0);
 
     // STATE DE EXIBICAO DO MODAL
@@ -28,14 +31,16 @@ export const HomeScreen = () => {
 
     const getTarefasComFiltro = async () => {
         try {
+            setRefreshing(true);
+            setLoading(true);
             let filtros = '?status=' + status;
 
             if (periodoDe) {
-                filtros += '&periodoDe=' + periodoDe;
+                filtros += '&periodoDe=' + moment(periodoDe).format("yyyy-MM-DD");
             }
 
             if (periodoAte) {
-                filtros += '&periodoAte=' + periodoAte;
+                filtros += '&periodoAte=' + moment(periodoAte).format("yyyy-MM-DD");
             }
 
             const resultado = await executaRequisicao('tarefa' + filtros, 'get');
@@ -45,6 +50,8 @@ export const HomeScreen = () => {
         } catch (e) {
             console.log(e);
         }
+        setRefreshing(false);
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -54,8 +61,15 @@ export const HomeScreen = () => {
     return (
         <SafeAreaView style={[defaultStyles.container, defaultStyles.containerTop]}>
             <Header />
-            <Filtros />
-            <Lista lista={tarefas} />
+            <Filtros 
+                periodoDe={periodoDe}
+                status={status}
+                periodoAte={periodoAte}
+                setStatus={setStatus}
+                setPeriodoDe={setPeriodoDe}
+                setPeriodoAte={setPeriodoAte} />
+
+            <Lista lista={tarefas} refreshing={refreshing} getLista={getTarefasComFiltro} loading={loading} />            
             <Footer />
         </SafeAreaView>
     );
