@@ -8,6 +8,7 @@ import filtroStyles from './filtros';
 import listaStyles from './lista';
 import footerStyles from './footer';
 import itemStyles from './itemLista';
+import modalStyles from './modal';
 
 const defaultStyles = StyleSheet.create({
     container: {
@@ -49,4 +50,4 @@ const defaultStyles = StyleSheet.create({
     }
 });
 
-export { loginStyles, defaultStyles, headerStyles, filtroStyles, listaStyles, footerStyles, itemStyles }
+export { loginStyles, defaultStyles, headerStyles, filtroStyles, listaStyles, footerStyles, itemStyles, modalStyles }

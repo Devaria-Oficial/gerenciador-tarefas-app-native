@@ -70,7 +70,7 @@ export const HomeScreen = () => {
                 setPeriodoAte={setPeriodoAte} />
 
             <Lista lista={tarefas} refreshing={refreshing} getLista={getTarefasComFiltro} loading={loading} />            
-            <Footer />
+            <Footer getLista={getTarefasComFiltro}/>
         </SafeAreaView>
     );
 }

@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { itemStyles } from '../styles/styles';
 import moment from 'moment';
+import { ModalAdicaoEdicao } from './Modal';
 
 export const ItemLista = (props: any) => {
-    const { item } = props;
+    const { item, selecionarTarefa } = props;
     const { dataConclusao, nome, dataPrevistaConclusao } = item;
 
     const getDataTexto = (dtConclusao: string, dtPrevisaoConclusao: string) => {
@@ -29,12 +30,13 @@ export const ItemLista = (props: any) => {
     )
 
     return (
-        dataConclusao ? 
+        dataConclusao ?
             <View style={[itemStyles.container]}>
                 {renderContent()}
             </View>
-        : 
-            <TouchableOpacity style={[itemStyles.container, itemStyles.naoConcluido]}>
+            :
+            <TouchableOpacity style={[itemStyles.container, itemStyles.naoConcluido]} 
+                onPress={() => selecionarTarefa(item)}>
                 {renderContent()}
             </TouchableOpacity>
     );

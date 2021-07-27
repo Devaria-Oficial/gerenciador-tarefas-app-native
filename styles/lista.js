@@ -10,6 +10,7 @@ export default StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
+        paddingBottom: RFValue(10)
     },
     empty:{
         justifyContent: "center",
